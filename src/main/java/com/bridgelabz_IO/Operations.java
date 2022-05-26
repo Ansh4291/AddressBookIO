@@ -1,6 +1,9 @@
 package com.bridgelabz_IO;
 
+import org.w3c.dom.css.CSSValue;
+
 import java.io.*;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,13 +17,16 @@ import java.util.stream.Collectors;
         //Taking Scanner Class Object
         static Scanner sc = new Scanner(System.in);
         static File file = new File("//home//asus//IdeaProjects//AddressBookUSingIO//src//test//resources//AddressbookFile.txt");
+        static File csvFile = new File("//home//asus//IdeaProjects//AddressBookUSingIO//src//test//resources//AddressBookcsvFile.csv");
         static HashMap<String, ArrayList<Contacts>> hashmap = new HashMap<>();
 
         //    method For Adding Multiple Address Book
         public static void AddressBook(Operations operations) throws IOException {
             int xyz = 0;
             do {
-                System.out.println("1) Add Address Book \n2)Search \n3)Display Adress book \n4) countPersonFromSame_City_State \n5) Sorted Contacts \n6) sortContactsByZipOrCityOrState \n7) Read From File \n8) Add To Adress Book File");
+                System.out.println("1) Add Address Book \n2)Search \n3)Display Adress book \n4) countPersonFromSame_City_State" +
+                        " \n5) Sorted Contacts \n6) sortContactsByZipOrCityOrState \n7) Read From File \n8) Add To Adress Book File" +
+                        " \n9 Read From CSV File \n10 Write From CSV File");
                 System.out.println("choice");
                 int ch = sc.nextInt();
                 switch (ch) {
@@ -66,6 +72,12 @@ import java.util.stream.Collectors;
                         break;
                     case 8:
                        addToAdressBookFile();
+                        break;
+                    case 9:
+                        readFromCSVFile();
+                        break;
+                    case 10:
+                        writeCSVFile();
                         break;
                     default:
                 }System.out.println("if u had dont create multiple address book press 1.");
@@ -356,6 +368,7 @@ import java.util.stream.Collectors;
                         System.out.println("Delete Details");
                         operations.deleteContact(contactsDetails);
                         break;
+
                     /*  Display contact details */
                     case 4:
                         System.out.println("Display details");
@@ -365,9 +378,7 @@ import java.util.stream.Collectors;
                         System.out.println("view Persons by city or state");
                         operations.SearchInSingleBook(contactsDetails);
                         break;
-                    case 6:
-                        System.out.println("Exit");
-                        break;
+
                     default:
                         System.out.println("invalid Option choose");
                         break;
@@ -393,8 +404,28 @@ import java.util.stream.Collectors;
                 while ((store = reader.readLine()) != null) {
                     System.out.println(store);
                 }
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        public static void writeCSVFile(){
+            try {
+                FileWriter fileWriterCSV = new FileWriter(csvFile);
+                fileWriterCSV.write(String.valueOf(Operations.hashmap));
+                fileWriterCSV.close();
+            }catch (IOException e){
+                throw new RuntimeException(e);
+            }
+        }
+        public static void readFromCSVFile(){
+            try {
+                BufferedReader readerCSV = new BufferedReader(new FileReader(csvFile));
+                String St;
+                while ((St = readerCSV.readLine()) != null){
+                    System.out.printf(St);
+                }
+            }catch (IOException e){
+                throw new RuntimeException(e);
             }
         }
     }
