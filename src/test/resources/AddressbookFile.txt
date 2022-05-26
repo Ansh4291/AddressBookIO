@@ -1,0 +1,9 @@
+{book1=[
+FirstName:- Anshul
+LastName:- Rathore
+Address:- tal
+City:- Kota
+State:- raj
+Zip code:- 324005
+Contact Number:- 0987654321
+Email Id:-ansh@gmail.com]}
