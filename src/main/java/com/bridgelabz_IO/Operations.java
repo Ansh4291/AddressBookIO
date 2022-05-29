@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
             do {
                 System.out.println("1) Add Address Book \n2)Search \n3)Display Adress book \n4) countPersonFromSame_City_State" +
                         " \n5) Sorted Contacts \n6) sortContactsByZipOrCityOrState \n7) Read From File \n8) Add To Adress Book File" +
-                        " \n9 Read From CSV File \n10 Write From CSV File");
+                        " \n9 Read From CSV File \n10 Write From CSV File ");
                 System.out.println("choice");
                 int ch = sc.nextInt();
                 switch (ch) {
@@ -345,7 +345,7 @@ import java.util.stream.Collectors;
             int chooseNumber;
             do {
                 System.out.println("Enter the no as u want too choose to perform the certain task");
-                System.out.println("1. Add Deatils \n2. Edit Details \n3. Delete Details \n4. Display Details \n5. SearchInSingleBook \n6. EXIT ");
+                System.out.println("1. Add Deatils \n2. Edit Details \n3. Delete Details \n4. Display Details \n5. SearchInSingleBook \n6. READ Json file \n7. Write json File ");
                 chooseNumber = sc.nextInt();
 
                 switch (chooseNumber) {
@@ -373,6 +373,12 @@ import java.util.stream.Collectors;
                     case 5:
                         System.out.println("view Persons by city or state");
                         operations.SearchInSingleBook(contactsDetails);
+                        break;
+                    case 6:
+                        ReadDataJSON();
+                        break;
+                    case 7:
+                        writedataJSON(contactsDetails);
                         break;
 
                     default:
@@ -409,6 +415,7 @@ import java.util.stream.Collectors;
                 FileWriter fileWriterCSV = new FileWriter(csvFile);
                 fileWriterCSV.write(String.valueOf(Operations.hashmap));
                 fileWriterCSV.close();
+
             }catch (IOException e){
                 throw new RuntimeException(e);
             }
@@ -424,24 +431,24 @@ import java.util.stream.Collectors;
                 throw new RuntimeException(e);
             }
         }
-        public static void writedataJSON(){
-            try ( BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(JSON_FILE , true))){
-                    Gson gson = new Gson();
+        public static void writedataJSON(ArrayList<Contacts> contactsDetails){
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(JSON_FILE, true))) {
+                Gson gson = new Gson();
                 String jsonString = gson.toJson(contactsDetails);
                 writer.write(jsonString);
-            }catch (IOException e){
-                throw new RuntimeException(e);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         }
         public static void ReadDataJSON() {
             try {
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(JSON_FILE));
+                BufferedReader readerJSON = new BufferedReader(new FileReader(JSON_FILE));
                 String string;
-                while ((string = readerJSON.readLine()) != null){
+                while ((string = readerJSON.readLine()) != null) {
                     System.out.printf(string);
                 }
-            }catch (IOException e){
-                throw new RuntimeException();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
