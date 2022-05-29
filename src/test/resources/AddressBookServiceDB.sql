@@ -96,7 +96,11 @@ mysql> SELECT FirstName , lastname , address , city , state , zip , phoneNO , em
 | FirstName | lastname | address  | city   | state     | zip    | phoneNO    | email            |
 +-----------+----------+----------+--------+-----------+--------+------------+------------------+
 | Anshul    | Rathore  | Talwandi | JAIPUR | rajasthan | 324005 | 8764314432 | ansh@gmail.com   |
-| Ashish    | Marshal  | nagar    | pune   | mh        | 400654 | 9754321465 | ashish@gmail.com |
+| Ashish    | Marshal  | nagar    | pune Ability to add person
+
+to both Friend and
+
+Family  | mh        | 400654 | 9754321465 | ashish@gmail.com |
 | Mahesh    | kumar    | dgsj     | nagar  | andra     | 987432 | 8764314432 | mahesh@gmail.com |
 | Rahul     | Jain     | Talwandi | kota   | rajasthan | 324765 | 234567890  | rahul@gmail.com  |
 +-----------+----------+----------+--------+-----------+--------+------------+------------------+
@@ -159,3 +163,70 @@ mysql> SELECT * FROM AddressBookServiceDB ORDER BY firstName;
 | Rahul     | Jain     | Talwandi | kota   | rajasthan | 324765 | 234567890  | rahul@gmail.com  |
 +-----------+----------+----------+--------+-----------+--------+------------+------------------+
 4 rows in set (0.00 sec)
+
+                   ******************UC9***********************
+
+===================(Ability to identify each Address Book with name and Type. Here the type could Family, Friends,
+                       Profession Alter Address Book to add name and type)==============================
+
+mysql> ALTER TABLE AddressBookServiceDB ADD(Book_Name VARCHAR(50) NOT NULL,Type VARCHAR(50) NOT NULL);
+ Query OK, 0 rows affected (0.04 sec)
+ Records: 0  Duplicates: 0  Warnings: 0
+
+ mysql> select * from AddressBookServiceDB;
+ +-----------+----------+----------+--------+-----------+--------+------------+------------------+-----------+------+
+ | firstName | lastName | address  | city   | state     | zip    | phoneNO    | email            | Book_Name | Type |
+ +-----------+----------+----------+--------+-----------+--------+------------+------------------+-----------+------+
+ | Anshul    | Rathore  | Talwandi | JAIPUR | rajasthan | 324005 | 8764314432 | ansh@gmail.com   |           |      |
+ | Ashish    | Marshal  | nagar    | pune   | mh        | 400654 | 9754321465 | ashish@gmail.com |           |      |
+ | Mahesh    | kumar    | dgsj     | nagar  | andra     | 987432 | 8764314432 | mahesh@gmail.com |           |      |
+ | Rahul     | Jain     | Talwandi | kota   | rajasthan | 324765 | 234567890  | rahul@gmail.com  |           |      |
+ +-----------+----------+----------+--------+-----------+--------+------------+------------------+-----------+------+
+ 4 rows in set (0.00 sec)
+
+ mysql> UPDATE AddressBookServiceDB SET Book_Name = "BRIDGELABZ", Type = "SOFTWARE ENG." where firstName = "Anshul";
+ Query OK, 1 row affected (0.01 sec)
+ Rows matched: 1  Changed: 1  Warnings: 0
+
+ mysql> select * from AddressBookServiceDB;
+ +-----------+----------+----------+--------+-----------+--------+------------+------------------+------------+---------------+
+ | firstName | lastName | address  | city   | state     | zip    | phoneNO    | email            | Book_Name  | Type          |
+ +-----------+----------+----------+--------+-----------+--------+------------+------------------+------------+---------------+
+ | Anshul    | Rathore  | Talwandi | JAIPUR | rajasthan | 324005 | 8764314432 | ansh@gmail.com   | BRIDGELABZ | SOFTWARE ENG. |
+ | Ashish    | Marshal  | nagar    | pune   | mh        | 400654 | 9754321465 | ashish@gmail.com |            |               |
+ | Mahesh    | kumar    | dgsj     | nagar  | andra     | 987432 | 8764314432 | mahesh@gmail.com |            |               |
+ | Rahul     | Jain     | Talwandi | kota   | rajasthan | 324765 | 234567890  | rahul@gmail.com  |            |               |
+ +-----------+----------+----------+--------+-----------+--------+------------+------------------+------------+---------------+
+ 4 rows in set (0.00 sec)
+
+                                     ******************UC10***********************
+
+===================(Ability to get number of contact persons i.e. count by type)=====================================
+
+mysql> SELECT COUNT(Type) FROM AddressBookServiceDB GROUP BY Type;
++-------------+
+| COUNT(Type) |
++-------------+
+|           1 |
+|           3 |
++-------------+
+2 rows in set (0.04 sec)
+
+                                    ******************UC11***********************
+
+====================(Ability to add person to both Friend and Family)=============================
+
+mysql> INSERT INTO AddressBookServiceDB  VALUES('saurabh','sharma','dadabari','kota','rajasthan','345675','0987654321','sa@gmail.com','tcs','profession');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from AddressBookServiceDB;
++-----------+----------+----------+--------+-----------+--------+------------+------------------+------------+---------------+
+| firstName | lastName | address  | city   | state     | zip    | phoneNO    | email            | Book_Name  | Type          |
++-----------+----------+----------+--------+-----------+--------+------------+------------------+------------+---------------+
+| Anshul    | Rathore  | Talwandi | JAIPUR | rajasthan | 324005 | 8764314432 | ansh@gmail.com   | BRIDGELABZ | SOFTWARE ENG. |
+| Ashish    | Marshal  | nagar    | pune   | mh        | 400654 | 9754321465 | ashish@gmail.com |            |               |
+| Mahesh    | kumar    | dgsj     | nagar  | andra     | 987432 | 8764314432 | mahesh@gmail.com |            |               |
+| Rahul     | Jain     | Talwandi | kota   | rajasthan | 324765 | 234567890  | rahul@gmail.com  |            |               |
+| saurabh   | sharma   | dadabari | kota   | rajasthan | 345675 | 0987654321 | sa@gmail.com     | tcs        | profession    |
++-----------+----------+----------+--------+-----------+--------+------------+------------------+------------+---------------+
+5 rows in set (0.00 sec)

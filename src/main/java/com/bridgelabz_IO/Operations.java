@@ -1,13 +1,8 @@
 package com.bridgelabz_IO;
 
-import org.w3c.dom.css.CSSValue;
+import com.google.gson.Gson;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.util.*;
-import java.util.stream.Collectors;
-
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,6 +13,7 @@ import java.util.stream.Collectors;
         static Scanner sc = new Scanner(System.in);
         static File file = new File("//home//asus//IdeaProjects//AddressBookUSingIO//src//test//resources//AddressbookFile.txt");
         static File csvFile = new File("//home//asus//IdeaProjects//AddressBookUSingIO//src//test//resources//AddressBookcsvFile.csv");
+        static File JSON_FILE = new File("//home//asus//IdeaProjects//AddressBookUSingIO//src//test//resources//demo.json");
         static HashMap<String, ArrayList<Contacts>> hashmap = new HashMap<>();
 
         //    method For Adding Multiple Address Book
@@ -426,6 +422,26 @@ import java.util.stream.Collectors;
                 }
             }catch (IOException e){
                 throw new RuntimeException(e);
+            }
+        }
+        public static void writedataJSON(){
+            try ( BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(JSON_FILE , true))){
+                    Gson gson = new Gson();
+                String jsonString = gson.toJson(contactsDetails);
+                writer.write(jsonString);
+            }catch (IOException e){
+                throw new RuntimeException(e);
+            }
+        }
+        public static void ReadDataJSON() {
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(JSON_FILE));
+                String string;
+                while ((string = readerJSON.readLine()) != null){
+                    System.out.printf(string);
+                }
+            }catch (IOException e){
+                throw new RuntimeException();
             }
         }
     }
