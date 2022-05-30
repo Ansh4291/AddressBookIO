@@ -230,3 +230,84 @@ mysql> select * from AddressBookServiceDB;
 | saurabh   | sharma   | dadabari | kota   | rajasthan | 345675 | 0987654321 | sa@gmail.com     | tcs        | profession    |
 +-----------+----------+----------+--------+-----------+--------+------------+------------------+------------+---------------+
 5 rows in set (0.00 sec)
+
+                              ************************UC12******************************
+
+======(Draw the ER Diagram for Address Book Service DB
+ - Identifies the Entities – Entities can be Identified using Normalization Technique
+ - Check each attribute and see if they are Composite or Multi-Valued)
+
+ mysql> show databases;
+ +----------------------+
+ | Database             |
+ +----------------------+
+ | AddressBookServiceDB |
+ | information_schema   |
+ | mysql                |
+ | payroll_services     |
+ | performance_schema   |
+ | sys                  |
+ +----------------------+
+ 6 rows in set (0.00 sec)
+
+ mysql> use AddressBookServiceDB;
+ Reading table information for completion of table and column names
+ You can turn off this feature to get a quicker startup with -A
+
+ Database changed
+ mysql> CREATE TABLE IF NOT EXISTS `AddressBookServiceDB`.`addressbook` (
+     ->   `ID` INT NOT NULL AUTO_INCREMENT,
+     ->   `Name` VARCHAR(50) NOT NULL,
+     ->   PRIMARY KEY (`ID`));
+ Query OK, 0 rows affected (0.02 sec)
+
+
+ mysql> CREATE TABLE IF NOT EXISTS `AddressBookServiceDB`.`Person` (
+     ->   `Person_id` INT NOT NULL,
+     ->   `First_Name` VARCHAR(50) NOT NULL,
+     ->   `Last_Name` VARCHAR(50) NOT NULL,
+     ->   `Email` VARCHAR(45) NOT NULL,
+     ->   `State` VARCHAR(45) NOT NULL,
+     ->   `Address` VARCHAR(70) NOT NULL,
+     ->   `City` VARCHAR(30) NOT NULL,
+     ->   `Zip_Code` VARCHAR(10) NOT NULL,
+     ->   `Phone_Number` VARCHAR(20) NOT NULL,
+     ->   `ID` INT NULL,
+     ->   PRIMARY KEY (`Person_id`),
+     ->   INDEX `ID_idx` (`ID` ASC) VISIBLE,
+     ->   CONSTRAINT `ID`
+     ->     FOREIGN KEY (`ID`)
+     ->     REFERENCES `AddressBookServiceDB`.`addressbook` (`ID`)
+     ->     ON DELETE NO ACTION
+     ->     ON UPDATE NO ACTION);
+ Query OK, 0 rows affected (0.01 sec)
+
+
+
+ mysql> CREATE TABLE IF NOT EXISTS `AddressBookServiceDB`.`Type` (
+     ->   `Type_Id` INT NOT NULL,
+     ->   `Type` VARCHAR(100) NOT NULL,
+     ->   `ID` INT NULL,
+     ->   PRIMARY KEY (`Type_Id`),
+     ->   INDEX `ID_idx` (`ID` ASC) VISIBLE,
+     ->   CONSTRAINT `Person_id`
+     ->     FOREIGN KEY (`ID`)
+     ->     REFERENCES `AddressBookServiceDB`.`Person` (`Person_id`)
+     ->     ON DELETE NO ACTION
+     ->     ON UPDATE NO ACTION);
+ Query OK, 0 rows affected (0.05 sec)
+
+
+ mysql> CREATE TABLE IF NOT EXISTS `AddressBookServiceDB`.`Phone_Number` (
+     ->   `PhoneNo_ID` INT NOT NULL,
+     ->   `Contact_number` VARCHAR(20) NOT NULL,
+     ->   `Person_id` INT NULL,
+     ->   PRIMARY KEY (`PhoneNo_ID`),
+     ->   INDEX `PhoneNo_ID_idx` (`Person_id` ASC) VISIBLE,
+     ->   CONSTRAINT `PhoneNo_ID`
+     ->     FOREIGN KEY (`Person_id`)
+     ->     REFERENCES `AddressBookServiceDB`.`Person` (`Person_id`)
+     ->     ON DELETE NO ACTION
+     ->     ON UPDATE NO ACTION);
+ Query OK, 0 rows affected (0.05 sec)
+
